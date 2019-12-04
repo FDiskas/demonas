@@ -13,9 +13,7 @@
 #import <AppCenterReactNative.h>
 #import <AppCenterReactNativeAnalytics.h>
 #import <AppCenterReactNativeCrashes.h>
-#import <AppCenterReactNative.h>
-#import <AppCenterReactNativeAnalytics.h>
-#import <AppCenterReactNativeCrashes.h>
+#import <AppCenterReactNativePush.h>
 
 @implementation AppDelegate
 
@@ -34,6 +32,7 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [AppCenterReactNative register];
+  [AppCenterReactNativePush register];
   [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
   [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
   return YES;
