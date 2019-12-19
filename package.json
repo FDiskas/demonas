@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "build:ios": "xcodebuild -workspace ios/demonas.xcworkspace -scheme demonas -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build > /dev/null",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
@@ -22,6 +23,7 @@
     "@babel/runtime": "^7.7.4",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
+    "detox": "^14.9.1",
     "eslint": "^6.7.2",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.57.0",
@@ -29,5 +31,16 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "configurations": {
+      "ios.sim": {
+        "binaryPath": "ios/build/demonas/Build/Products/Debug-iphonesimulator/demonas.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace ios/demonas.xcworkspace -scheme demonas -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build > /dev/null",
+        "type": "ios.simulator",
+        "name": "iPhone 7"
+      }
+    }
   }
 }
