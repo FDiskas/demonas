@@ -8,7 +8,9 @@
     "build:ios": "xcodebuild -workspace ios/demonas.xcworkspace -scheme demonas -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build > /dev/null",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "pretest:e2e": "detox build -c ios.sim",
+    "test:e2e": "detox test -c ios.sim"
   },
   "dependencies": {
     "appcenter": "^2.6.0",
@@ -20,24 +22,38 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/runtime": "^7.7.4",
     "@react-native-community/eslint-config": "^0.0.5",
+    "@types/detox": "^14.5.2",
+    "@types/jasmine": "^3.5.0",
+    "@types/jest": "^24.0.24",
+    "@types/node": "^12.12.21",
+    "@types/react": "^16.9.17",
+    "@types/react-native": "^0.60.25",
+    "@types/react-test-renderer": "^16.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@typescript-eslint/parser": "^2.14.0",
     "babel-jest": "^24.9.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "detox": "^14.9.1",
     "eslint": "^6.7.2",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.57.0",
-    "react-test-renderer": "16.9.0"
-  },
-  "jest": {
-    "preset": "react-native"
+    "react-test-renderer": "16.9.0",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.4"
   },
   "detox": {
     "test-runner": "jest",
+    "runner-config": "e2e/config.json",
     "configurations": {
       "ios.sim": {
         "binaryPath": "ios/build/demonas/Build/Products/Debug-iphonesimulator/demonas.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace ios/demonas.xcworkspace -scheme demonas -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build > /dev/null",
+        "build": "npm run build:ios",
         "type": "ios.simulator",
         "name": "iPhone 7"
       }

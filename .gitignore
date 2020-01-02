@@ -29,6 +29,7 @@ build/
 !android/gradle/wrapper/gradle-wrapper.jar
 local.properties
 *.iml
+.jest
 
 # node.js
 #
