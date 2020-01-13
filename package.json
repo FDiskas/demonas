@@ -38,7 +38,7 @@
     "babel-plugin-module-resolver": "^4.0.0",
     "detox": "^14.9.1",
     "eslint": "^6.7.2",
-    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-import-resolver-typescript": "~1.1.1",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-react-hooks": "^2.3.0",
     "jest": "^24.9.0",
@@ -52,7 +52,7 @@
     "runner-config": "e2e/config.json",
     "configurations": {
       "ios.sim": {
-        "binaryPath": "ios/build/demonas/Build/Products/Debug-iphonesimulator/demonas.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/demonas.app",
         "build": "npm run build:ios",
         "type": "ios.simulator",
         "name": "iPhone 7"
