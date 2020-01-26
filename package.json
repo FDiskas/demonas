@@ -13,12 +13,15 @@
     "test:e2e": "detox test -c ios.sim"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^6.2.0",
     "appcenter": "^2.6.0",
     "appcenter-analytics": "^2.6.0",
     "appcenter-crashes": "^2.6.0",
     "appcenter-push": "^2.6.0",
+    "firebase": "^7.7.0",
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.61.5",
+    "react-native-firebase": "^5.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
