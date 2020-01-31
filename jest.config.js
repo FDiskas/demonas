@@ -13,6 +13,7 @@ module.exports = {
             babelConfig: true,
         },
     },
-    cacheDirectory: '.jest/cache',
-    testPathIgnorePatterns: ['<rootDir>/e2e/', '<rootDir>/node_modules/'],
+    transformIgnorePatterns: ['node_modules/(?!(react-native|my-project|react-native-button)/)'],
+    testPathIgnorePatterns: ['e2e', 'node_modules'],
+    setupFilesAfterEnv: ['./__mocks__/mockFirebase.ts'],
 };
