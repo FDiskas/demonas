@@ -604,6 +604,8 @@ PODS:
     - Firebase/Storage (~> 6.13.0)
     - React
     - RNFBApp
+  - RNSVG (11.0.1):
+    - React
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -644,6 +646,7 @@ DEPENDENCIES:
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - "RNFBPerf (from `../node_modules/@react-native-firebase/perf`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -752,6 +755,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/perf"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -824,6 +829,7 @@ SPEC CHECKSUMS:
   RNFBFunctions: 04ab4f777106d8a20ed1c9c2116f24014c23d61a
   RNFBPerf: d2d2facff8a3afb13670e2ee7ad0c078ecb51eb8
   RNFBStorage: 336c47daa7ba460fcac8b61054f68130c618cfaa
+  RNSVG: 67f1f12dae2cef6ed59a42cae74a6b8f5a9e7b46
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 8571774528297e2425e651d9b381e192bc2bfd56
