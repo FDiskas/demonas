@@ -1,8 +1,22 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { TextInput, Alert } from 'react-native';
 import { firebase, FirebaseAuthTypes } from '@react-native-firebase/auth';
-
-import { WarrantyList } from 'app/WarrantyList';
+import {
+    Container,
+    Header,
+    Content,
+    Button,
+    Text,
+    Icon,
+    Left,
+    Title,
+    Right,
+    Body,
+    Item,
+    Form,
+    Input,
+    Label,
+} from 'native-base';
 
 interface ComponentState {
     phoneNumber: string;
@@ -23,7 +37,6 @@ export class App extends React.Component<{}, ComponentState> {
         }),
     };
     private initializing = false;
-    private confirmation: any = () => {};
 
     private logOut = async () => {
         this.initializing = true;
@@ -87,58 +100,64 @@ export class App extends React.Component<{}, ComponentState> {
         const { isConfirmInput, confirmCode, phoneNumber } = this.state;
         const { user } = this.state;
         return (
-            <View testID="welcome" style={styles.container}>
-                <Text style={styles.welcome}>TypeScript Detox Example</Text>
-                <Text>Welcome {JSON.stringify(user)}</Text>
-                <Button testID="button" title="Tap Me!" onPress={() => Alert.alert('Hello World!')} />
-                <Text>Type some stuff below</Text>
-                {user && <Button onPress={this.logOut} title="Log out" />}
-                {!user && (
-                    <>
-                        <TextInput
-                            placeholder={isConfirmInput ? 'Enter confirmation code' : 'Enter Phone number'}
-                            testID="textInput"
-                            autoCapitalize="none"
-                            style={styles.textInput}
-                            keyboardType="phone-pad"
-                            onChangeText={isConfirmInput ? this.onConfirmCodeChange : this.onPhoneChange}
-                            value={isConfirmInput ? confirmCode : phoneNumber}
-                        />
-                        <Button
-                            onPress={isConfirmInput ? this.submitConfirmCode : this.logIn}
-                            title={isConfirmInput ? 'Confirm' : 'Log In'}
-                        />
-                    </>
-                )}
-                <WarrantyList />
-            </View>
+            <>
+                <Container testID="welcome">
+                    <Header>
+                        <Left>
+                            <Button transparent onPress={() => {}}>
+                                <Icon name="menu" />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>Check Box</Title>
+                        </Body>
+                        <Right />
+                    </Header>
+                    <Content padder>
+                        <Text>TypeScript Detox Example</Text>
+                        <Title>Check Box</Title>
+                        <Text>Welcome {JSON.stringify(user, undefined, 2)}</Text>
+                        <Button testID="button" onPress={() => Alert.alert('Hello World!')}>
+                            <Text>Tap Me!</Text>
+                        </Button>
+
+                        <Form>
+                            <Item floatingLabel>
+                                <Label>Username</Label>
+                                <Input />
+                            </Item>
+                            <Item>
+                                <Input placeholder="Username" />
+                            </Item>
+                            <Item last>
+                                <Input placeholder="Password" />
+                            </Item>
+                        </Form>
+
+                        <Text>Type some stuff below</Text>
+                        {user && (
+                            <Button onPress={this.logOut}>
+                                <Text>Log out</Text>
+                            </Button>
+                        )}
+                        {!user && (
+                            <>
+                                <TextInput
+                                    placeholder={isConfirmInput ? 'Enter confirmation code' : 'Enter Phone number'}
+                                    testID="textInput"
+                                    autoCapitalize="none"
+                                    keyboardType="phone-pad"
+                                    onChangeText={isConfirmInput ? this.onConfirmCodeChange : this.onPhoneChange}
+                                    value={isConfirmInput ? confirmCode : phoneNumber}
+                                />
+                                <Button onPress={isConfirmInput ? this.submitConfirmCode : this.logIn}>
+                                    <Text>{isConfirmInput ? 'Confirm' : 'Log In'}</Text>
+                                </Button>
+                            </>
+                        )}
+                    </Content>
+                </Container>
+            </>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    textInput: {
-        width: '50%',
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    reversedText: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});

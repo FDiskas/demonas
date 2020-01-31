@@ -13,7 +13,7 @@ module.exports = {
             babelConfig: true,
         },
     },
-    transformIgnorePatterns: ['node_modules/(?!(react-native|my-project|react-native-button)/)'],
+    transformIgnorePatterns: ['node_modules/(?!(react-native|react-native-button|native-base-.*|react-native-.*)/)'],
     testPathIgnorePatterns: ['e2e', 'node_modules'],
     setupFilesAfterEnv: ['./__mocks__/mockFirebase.ts'],
 };

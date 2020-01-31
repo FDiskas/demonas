@@ -37,3 +37,4 @@ Firestore.FieldValue = {
     serverTimestamp: jest.fn(),
 };
 jest.doMock('@react-native-firebase/firestore', () => Firestore);
+jest.useFakeTimers();
