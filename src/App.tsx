@@ -55,6 +55,8 @@ export class App extends React.Component<{}, ComponentState> {
 
         this.setState({ confirmHandler, isConfirmInput: true });
     };
+    private initializing = false;
+    private confirmation: any = () => {};
 
     private confirmCode = async () => {
         const { confirmCode, confirmHandler } = this.state;

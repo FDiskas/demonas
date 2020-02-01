@@ -606,6 +606,7 @@ PODS:
     - RNFBApp
   - RNSVG (11.0.1):
     - React
+    - RNFBApp
   - Yoga (1.14.0)
 
 DEPENDENCIES:
