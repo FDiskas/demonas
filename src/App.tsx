@@ -26,6 +26,8 @@ interface ComponentState {
     confirmHandler: Promise<FirebaseAuthTypes.ConfirmationResult>;
 }
 
+import BackgroundImage from 'assets/background.svg';
+
 export class App extends React.Component<{}, ComponentState> {
     state = {
         phoneNumber: '',
@@ -101,8 +103,12 @@ export class App extends React.Component<{}, ComponentState> {
         const { user } = this.state;
         return (
             <>
-                <Container testID="welcome">
-                    <Header>
+                <BackgroundImage
+                    style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, resizeMode: 'stretch' }}
+                    preserveAspectRatio="xMinYMin slice"
+                />
+                <Container testID="welcome" style={{ backgroundColor: 'transparent' }}>
+                    <Header transparent>
                         <Left>
                             <Button transparent onPress={() => {}}>
                                 <Icon name="menu" />
