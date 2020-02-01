@@ -27,7 +27,9 @@
     "native-base": "^2.13.8",
     "react": "16.12.0",
     "react-native": "0.61.5",
-    "react-native-svg": "^11.0.1"
+    "react-native-svg": "^11.0.1",
+    "react-navigation": "^4.1.0",
+    "react-navigation-stack": "^2.0.16"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -45,6 +47,7 @@
     "@types/react-test-renderer": "16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
+    "@types/react-navigation": "^3.4.0",
     "babel-jest": "^25.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "detox": "^15.1.4",

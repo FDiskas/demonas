@@ -7,7 +7,7 @@ export class LoginForm extends React.Component {
         return (
             <Container>
                 <Content padder centerContent contentContainerStyle={styles.content}>
-                    <Text>Component LoginForm</Text>
+                    <Text>LoginForm</Text>
                 </Content>
             </Container>
         );

@@ -1,4 +1,7 @@
-module.exports = (plop) => {
+module.exports = (
+    /** @type {import('plop').NodePlopAPI} */
+    plop,
+) => {
     plop.setGenerator('component', {
         description: 'Create a reusable component',
         prompts: [
@@ -21,31 +24,18 @@ module.exports = (plop) => {
             },
             {
                 type: 'add',
-                path: 'src/components/{{pascalCase name}}/index.ts',
-                templateFile: '.templates/Component/index.ts.hbs',
-            },
-            {
-                type: 'add',
                 path: 'src/components/index.ts',
-                templateFile: '.templates/injectable-index.ts.hbs',
                 skipIfExists: true,
             },
             {
                 type: 'append',
                 path: 'src/components/index.ts',
-                pattern: `/* PLOP_INJECT_IMPORT */`,
-                template: `import {{{pascalCase name}}} from './{{pascalCase name}}';`,
-            },
-            {
-                type: 'append',
-                path: 'src/components/index.ts',
-                pattern: `/* PLOP_INJECT_EXPORT */`,
-                template: `    {{pascalCase name}},`,
+                template: `export * from './{{pascalCase name}}/{{pascalCase name}}';\n`,
+                skipIfExists: true,
             },
         ],
     });
 
-    // TODO: implement screens
     plop.setGenerator('screen', {
         description: 'Create a screen',
         prompts: [
@@ -54,47 +44,56 @@ module.exports = (plop) => {
                 name: 'name',
                 message: 'What is your page name?',
             },
-        ],
-        actions: [
             {
-                type: 'add',
-                path: 'src/pages/{{pascalCase name}}/{{pascalCase name}}.js',
-                templateFile: 'plop-templates/Page/Page.js.hbs',
-            },
-            {
-                type: 'add',
-                path: 'src/pages/{{pascalCase name}}/{{pascalCase name}}.test.js',
-                templateFile: 'plop-templates/Page/Page.test.js.hbs',
-            },
-            {
-                type: 'add',
-                path: 'src/pages/{{pascalCase name}}/{{pascalCase name}}.module.css',
-                templateFile: 'plop-templates/Page/Page.module.css.hbs',
-            },
-            {
-                type: 'add',
-                path: 'src/pages/{{pascalCase name}}/index.js',
-                templateFile: 'plop-templates/Page/index.js.hbs',
-            },
-            {
-                type: 'add',
-                path: 'src/pages/index.js',
-                templateFile: 'plop-templates/injectable-index.js.hbs',
-                skipIfExists: true,
-            },
-            {
-                type: 'append',
-                path: 'src/pages/index.js',
-                pattern: `/* PLOP_INJECT_IMPORT */`,
-                template: `import {{pascalCase name}} from './{{pascalCase name}}';`,
-            },
-            {
-                type: 'append',
-                path: 'src/pages/index.js',
-                pattern: `/* PLOP_INJECT_EXPORT */`,
-                template: `\t{{pascalCase name}},`,
+                type: 'confirm',
+                name: 'navigator',
+                message: 'Add to navigation?',
+                default: false,
             },
         ],
+        actions: ({ navigator }) => {
+            const actions = [
+                {
+                    type: 'add',
+                    path: 'src/screens/{{pascalCase name}}/{{pascalCase name}}.tsx',
+                    templateFile: '.templates/Component/Component.tsx.hbs',
+                },
+                {
+                    type: 'add',
+                    path: 'src/screens/index.ts',
+                    skipIfExists: true,
+                },
+                {
+                    type: 'append',
+                    path: 'src/screens/index.ts',
+                    template: `export * from './{{pascalCase name}}/{{pascalCase name}}';\n`,
+                    skipIfExists: true,
+                },
+            ];
+            if (navigator) {
+                actions.push(
+                    {
+                        type: 'add',
+                        path: 'src/routes/index.ts',
+                        templateFile: '.templates/screen.ts.hbs',
+                        skipIfExists: true,
+                    },
+                    {
+                        type: 'append',
+                        path: 'src/routes/index.ts',
+                        pattern: `/* PLOP_INJECT_IMPORT */`,
+                        template: `import { {{pascalCase name}} } from 'app/screens';`,
+                    },
+                    {
+                        type: 'append',
+                        path: 'src/routes/index.ts',
+                        pattern: `/* PLOP_INJECT_EXPORT */`,
+                        template: `    {{pascalCase name}},`,
+                    },
+                );
+            }
+            return actions;
+        },
     });
 
     plop.setGenerator('service', {
@@ -115,56 +114,13 @@ module.exports = (plop) => {
             {
                 type: 'add',
                 path: 'src/services/index.ts',
-                templateFile: '.templates/injectable-index.ts.hbs',
                 skipIfExists: true,
             },
             {
                 type: 'append',
                 path: 'src/services/index.ts',
-                pattern: `/* PLOP_INJECT_IMPORT */`,
-                template: `import {{camelCase name}} from './{{camelCase name}}';`,
-            },
-            {
-                type: 'append',
-                path: 'src/services/index.ts',
-                pattern: `/* PLOP_INJECT_EXPORT */`,
-                template: `    {{camelCase name}},`,
-            },
-        ],
-    });
-
-    plop.setGenerator('hook', {
-        description: 'Create a custom react hook',
-        prompts: [
-            {
-                type: 'input',
-                name: 'name',
-                message: 'What is your hook name?',
-            },
-        ],
-        actions: [
-            {
-                type: 'add',
-                path: 'src/hooks/{{camelCase name}}.js',
-                templateFile: 'plop-templates/hook.js.hbs',
-            },
-            {
-                type: 'add',
-                path: 'src/hooks/index.js',
-                templateFile: 'plop-templates/injectable-index.js.hbs',
+                template: `export * from './{{camelCase name}}';\n`,
                 skipIfExists: true,
-            },
-            {
-                type: 'append',
-                path: 'src/hooks/index.js',
-                pattern: `/* PLOP_INJECT_IMPORT */`,
-                template: `import {{camelCase name}} from './{{camelCase name}}';`,
-            },
-            {
-                type: 'append',
-                path: 'src/hooks/index.js',
-                pattern: `/* PLOP_INJECT_EXPORT */`,
-                template: `\t{{camelCase name}},`,
             },
         ],
     });
