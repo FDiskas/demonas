@@ -1,6 +1,11 @@
 # OSX
 #
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
 
 # Xcode
 #
@@ -63,6 +68,11 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-# Firebase configs
-GoogleService-Info.plist
-google-services.json
+# Dist folder
+dist/**/__snapshots__
+dist/__tests__
+
+# Generated files
+bin/
+gen/
+out/

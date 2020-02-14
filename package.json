@@ -1,17 +1,42 @@
 {
-  "name": "demonas",
+  "name": "native-base",
+  "description": "Essential cross-platform UI components for React Native",
+  "keywords": [
+    "android",
+    "ios",
+    "react",
+    "native",
+    "react-native",
+    "native-modules",
+    "react-component",
+    "navbar",
+    "packager"
+  ],
   "version": "0.0.1",
-  "private": true,
+  "main": "dist/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeekyAnts/NativeBase.git"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/NativeBase"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest --noStackTrace --notify --detectOpenHandles",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "build:ios": "xcodebuild -workspace ios/demonas.xcworkspace -scheme demonas -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build > /dev/null",
     "pretest:e2e": "detox build -c ios.sim",
     "test:e2e": "detox test -c ios.sim --cleanup",
-    "generate": "plop"
+    "generate": "plop",
+    "compile": "rm -rf dist/* && tsc -p ./",
+    "transpile": "npm run compile && cp src/basic/Icon/NBIcons.json dist/src/basic/Icon",
+    "prepublish": "npm run transpile",
+    "postinstall": "node addEjectScript.js",
+    "build": "babel src --out-dir dist --ignore node_modules,dist --source-maps"
   },
   "dependencies": {
     "@react-native-firebase/admob": "^6.2.0",
@@ -25,6 +50,7 @@
     "@react-native-firebase/perf": "^6.2.0",
     "@react-native-firebase/storage": "^6.2.0",
     "native-base": "^2.13.8",
+    "native-base-shoutem-theme": "^0.3.1",
     "react": "16.12.0",
     "react-native": "0.61.5",
     "react-native-gesture-handler": "^1.5.3",
@@ -37,18 +63,25 @@
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^0.0.7",
+    "@types/blueimp-md5": "^2.7.0",
+    "@types/color": "^3.0.1",
+    "@types/create-react-class": "^15.6.3",
     "@types/detox": "^14.5.2",
     "@types/enzyme": "^3.10.4",
     "@types/eslint-plugin-prettier": "^2.2.0",
     "@types/jasmine": "^3.5.2",
     "@types/jest": "^25.1.1",
+    "@types/lodash": "^4.14.149",
     "@types/node": "^13.7.0",
     "@types/prettier": "^1.19.0",
     "@types/react-native": "^0.61.9",
+    "@types/react-native-drawer": "^2.5.2",
+    "@types/react-native-vector-icons": "^6.4.5",
     "@types/react-navigation": "^3.4.0",
     "@types/react-test-renderer": "16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
+    "babel-cli": "^6.26.0",
     "babel-jest": "^25.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "detox": "^15.1.4",
@@ -67,6 +100,10 @@
     "react-test-renderer": "16.12.0",
     "ts-jest": "^25.1.0",
     "typescript": "^3.7.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.4.1",
+    "react-native": ">=0.56.0"
   },
   "detox": {
     "test-runner": "jest",

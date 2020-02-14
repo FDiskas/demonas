@@ -1,18 +1,18 @@
 declare module '*.svg' {
-    import { SvgProps } from 'react-native-svg';
+  import { SvgProps } from 'react-native-svg';
 
-    const content: React.ComponentClass<SvgProps, any>;
-    export default content;
+  const content: React.ComponentClass<SvgProps, any>;
+  export default content;
 }
 
 declare type SimpleObject<T = any> = {
-    [key: string]: T;
+  [key: string]: T;
 };
 
 declare type Nullable<T> = T | null;
 
 declare interface AppParameters {
-    defaultPhonePrefix: string;
+  defaultPhonePrefix: string;
 }
 
 declare module '*.png';
