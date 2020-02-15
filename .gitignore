@@ -75,4 +75,4 @@ dist/__tests__
 # Generated files
 bin/
 gen/
-out/
+out/dist

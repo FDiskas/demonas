@@ -1,6 +1,5 @@
-/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
-import { Keyboard, Platform, Animated, ViewPropTypes } from 'react-native';
+import { Keyboard, Platform, Animated } from 'react-native';
 import { connectStyle } from 'native-base-shoutem-theme';
 
 import mapPropsToStyleNames from '../utils/mapPropsToStyleNames';
@@ -17,8 +16,6 @@ const POSITION = {
 type ToastContainerState = {
   keyboardHeight: number;
   isKeyboardVisible: boolean;
-  keyboardHeight: any;
-  isKeyboardVisible: boolean;
   modalVisible: boolean;
   text: any;
   buttonText: any;
@@ -30,11 +27,7 @@ type ToastContainerState = {
   buttonStyle: any;
   textStyle: any;
   onClose: any;
-  modalVisible: boolean;
   fadeAnim: any;
-  keyboardHeight: number;
-  isKeyboardVisible: boolean;
-  modalVisible: boolean;
 };
 
 class ToastContainer extends Component<{}, ToastContainerState> {
@@ -46,6 +39,7 @@ class ToastContainer extends Component<{}, ToastContainerState> {
       this.toastInstance._root.closeToast('functionCall');
     }
   }
+
   constructor(props) {
     super(props);
     this.state = {

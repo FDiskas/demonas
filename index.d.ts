@@ -1,3 +1,7 @@
+declare module 'native-base-shoutem-theme';
+
+declare module 'clamp';
+
 declare module 'native-base' {
   import * as React from 'react';
   import * as ReactNative from 'react-native';

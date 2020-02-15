@@ -1,0 +1,30 @@
+{
+  "sourceRoot": "src",
+  "presets": ["module:metro-react-native-babel-preset"],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "app": "./src",
+          "assets": "./assets"
+        }
+      }
+    ],
+    [
+      "babel-plugin-typescript-to-proptypes",
+      { "comments": true, "strict": true, "typeCheck": true }
+    ]
+  ],
+  "only": ["./src"],
+  "ignore": [
+    "node_modules",
+    "dist",
+    "jest.config.js",
+    "src/__mocks__",
+    "src/__tests__"
+  ]
+}
