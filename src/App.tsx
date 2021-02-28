@@ -1,70 +1,169 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import * as React from 'react';
+import { TextInput, Alert } from 'react-native';
+import { firebase, FirebaseAuthTypes } from '@react-native-firebase/auth';
+import {
+    Container,
+    Header,
+    Content,
+    Button,
+    Text,
+    Icon,
+    Left,
+    Title,
+    Right,
+    Body,
+    Item,
+    Form,
+    Input,
+    Label,
+} from 'native-base';
 
-interface Props {}
-
-interface State {
-    text: string;
+interface ComponentState {
+    phoneNumber: string;
+    confirmCode: string;
+    user: FirebaseAuthTypes.User | null;
+    isConfirmInput: boolean;
+    confirmHandler: Promise<FirebaseAuthTypes.ConfirmationResult>;
 }
 
-export default class App extends Component<Props, State> {
-    public state = {
-        text: '',
+import BackgroundImage from 'assets/background.svg';
+
+export class App extends React.Component<{}, ComponentState> {
+    state = {
+        phoneNumber: '',
+        user: null,
+        confirmCode: '',
+        isConfirmInput: false,
+        confirmHandler: new Promise<FirebaseAuthTypes.ConfirmationResult>((resolve) => {
+            resolve();
+        }),
+    };
+    private initializing = false;
+
+    private logOut = async () => {
+        this.initializing = true;
+        try {
+            await firebase.auth().signOut();
+        } catch (e) {
+            throw new Error(e);
+        }
     };
 
-    public render() {
-        const { text } = this.state;
-        return (
-            <View testID="welcome" style={styles.container}>
-                <Text style={styles.welcome}>TypeScript Detox Example</Text>
-                <Button testID="button" title="Tap Me!" onPress={() => Alert.alert('Hello World!')} />
-                <Text>Type some stuff below</Text>
-                <TextInput
-                    testID="textInput"
-                    value={text}
-                    autoCapitalize="none"
-                    style={styles.textInput}
-                    onChangeText={(newText) => this.setState({ text: newText })}
-                />
-                <Text>The above but reversed: {'\n'}</Text>
-                <Text testID="reversedText" style={styles.reversedText}>
-                    {this.reverseText(text)}
-                </Text>
-            </View>
-        );
+    private logIn = () => {
+        const { phoneNumber } = this.state;
+        this.initializing = true;
+
+        const confirmHandler = firebase.auth().signInWithPhoneNumber(phoneNumber);
+
+        this.setState({ confirmHandler, isConfirmInput: true });
+    };
+
+    private confirmCode = async () => {
+        const { confirmCode, confirmHandler } = this.state;
+
+        try {
+            (await confirmHandler).confirm(confirmCode);
+        } catch (e) {
+            throw new Error(e);
+        }
+    };
+
+    submitConfirmCode = () => {
+        this.confirmCode();
+    };
+
+    authListener = () => {
+        firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
+    };
+
+    private onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
+        this.setState({ user });
+        if (user) {
+            this.setState({ user });
+        } else {
+            this.setState({ user: null });
+        }
+        if (this.initializing) {
+            this.initializing = false;
+        }
+    };
+    onPhoneChange = (phoneNumber: string) => {
+        this.setState({ phoneNumber });
+    };
+    onConfirmCodeChange = (confirmCode: string) => {
+        this.setState({ confirmCode });
+    };
+
+    componentDidMount() {
+        this.authListener();
     }
 
-    private reverseText = (text: string): string => {
-        return text
-            .split('')
-            .reverse()
-            .join('');
-    };
-}
+    render() {
+        const { isConfirmInput, confirmCode, phoneNumber } = this.state;
+        const { user } = this.state;
+        return (
+            <>
+                <BackgroundImage
+                    style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, resizeMode: 'stretch' }}
+                    preserveAspectRatio="xMinYMin slice"
+                />
+                <Container testID="welcome" style={{ backgroundColor: 'transparent' }}>
+                    <Header transparent>
+                        <Left>
+                            <Button transparent onPress={() => {}}>
+                                <Icon name="menu" />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>Check Box</Title>
+                        </Body>
+                        <Right />
+                    </Header>
+                    <Content padder>
+                        <Text>TypeScript Detox Example</Text>
+                        <Title>Check Box</Title>
+                        <Text>Welcome {JSON.stringify(user, undefined, 2)}</Text>
+                        <Button testID="button" onPress={() => Alert.alert('Hello World!')}>
+                            <Text>Tap Me!</Text>
+                        </Button>
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    textInput: {
-        width: '50%',
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    reversedText: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});
+                        <Form>
+                            <Item floatingLabel>
+                                <Label>Username</Label>
+                                <Input />
+                            </Item>
+                            <Item>
+                                <Input placeholder="Username" />
+                            </Item>
+                            <Item last>
+                                <Input placeholder="Password" />
+                            </Item>
+                        </Form>
+
+                        <Text>Type some stuff below</Text>
+                        {user && (
+                            <Button onPress={this.logOut}>
+                                <Text>Log out</Text>
+                            </Button>
+                        )}
+                        {!user && (
+                            <>
+                                <TextInput
+                                    placeholder={isConfirmInput ? 'Enter confirmation code' : 'Enter Phone number'}
+                                    testID="textInput"
+                                    autoCapitalize="none"
+                                    keyboardType="phone-pad"
+                                    onChangeText={isConfirmInput ? this.onConfirmCodeChange : this.onPhoneChange}
+                                    value={isConfirmInput ? confirmCode : phoneNumber}
+                                />
+                                <Button onPress={isConfirmInput ? this.submitConfirmCode : this.logIn}>
+                                    <Text>{isConfirmInput ? 'Confirm' : 'Log In'}</Text>
+                                </Button>
+                            </>
+                        )}
+                    </Content>
+                </Container>
+            </>
+        );
+    }
+}

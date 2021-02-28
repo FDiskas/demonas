@@ -1,6 +1,16 @@
-### Installation
+## Boiler plate
 
-1. `yarn`
-1. `cd ios && pod install`
-1. `cd ../ && yarn test`
-1. `yarn test:e2e`
+- [x] react-native
+- [x] components generator
+- [x] Unit tests
+- [x] E2E Tests
+- [x] Firebase
+- [x] svg support
+- [x] Eslint + prettier
+- [x] TypeScript
+- [ ] Common type definitions
+- [ ] Navigator
+- [ ] State management
+
+### Details about features
+---
